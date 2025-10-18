@@ -7,6 +7,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.font_manager as fm
 from matplotlib.patches import FancyBboxPatch
 
 # --- 全局配置 ---
@@ -21,10 +22,33 @@ except ImportError:  # pragma: no cover - 允许无此依赖
     HAS_ADJUST_TEXT = False
 
 # 设置全局字体和样式，确保中文正确显示
-plt.rcParams['font.sans-serif'] = [
-    'Arial Unicode MS', 'SimHei', 'Microsoft YaHei', 'Heiti TC', 'DejaVu Sans'
-]
-plt.rcParams['axes.unicode_minus'] = False
+def setup_chinese_font():
+    """配置中文字体，优先使用本地字体文件"""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    font_path = os.path.join(script_dir, 'fonts', 'WenQuanYiMicroHei.ttf')
+    
+    if os.path.exists(font_path):
+        # 使用本地字体文件
+        fm.fontManager.addfont(font_path)
+        font_prop = fm.FontProperties(fname=font_path)
+        font_name = font_prop.get_name()
+        plt.rcParams['font.family'] = font_name
+        plt.rcParams['font.sans-serif'] = [font_name, 'sans-serif']
+        print(f"✓ 已加载中文字体: {font_name} -> {font_path}")
+    else:
+        # 回退到系统字体
+        plt.rcParams['font.sans-serif'] = [
+            'Noto Sans CJK SC', 'Noto Sans CJK TC', 'WenQuanYi Micro Hei',
+            'Droid Sans Fallback', 'Arial Unicode MS', 'SimHei', 
+            'Microsoft YaHei', 'Heiti TC', 'sans-serif'
+        ]
+        print("⚠ 未找到本地字体文件，使用系统字体")
+    
+    plt.rcParams['axes.unicode_minus'] = False
+
+# 初始化字体
+setup_chinese_font()
+
 plt.rcParams['figure.dpi'] = 120  # 提高图像分辨率
 plt.rcParams['savefig.dpi'] = 300  # 提高保存图像的分辨率
 

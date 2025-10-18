@@ -48,3 +48,7 @@ ENV/
 # Excel temporary files
 ~$*.xlsx
 ~$*.xls
+
+# Fonts (keep the Chinese font file)
+电价绘制图/fonts/
+!电价绘制图/fonts/WenQuanYiMicroHei.ttf

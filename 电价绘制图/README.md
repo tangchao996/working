@@ -40,6 +40,8 @@
 pip install pandas matplotlib numpy seaborn openpyxl
 ```
 
+> 📦 仓库已自带中文字体 `WenQuanYiMicroHei.ttf`，脚本会自动加载，确保中文标题和标注不会显示为方块。
+
 **可选依赖**（用于优化数据标签布局，避免重叠）：
 ```bash
 pip install adjustText
