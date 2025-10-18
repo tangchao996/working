@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -255,8 +256,9 @@ if __name__ == '__main__':
         print("您可以通过以下命令安装： pip install adjustText\n")
 
     # 1. 从Excel文件加载数据
-    excel_file = '/Users/smc/Desktop/每日绘图分享/每日电价分享.xlsx'
-    save_location = '/Users/smc/Desktop/每日绘图分享/电价趋势分析图_专业版.png'
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    excel_file = os.path.join(script_dir, '每日电价分享.xlsx')
+    save_location = os.path.join(script_dir, '电价趋势分析图_专业版.png')
     
     try:
         print(f"正在尝试从 '{excel_file}' 加载数据...")
